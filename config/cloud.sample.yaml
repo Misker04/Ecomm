@@ -1,0 +1,23 @@
+session_timeout_seconds: 300
+
+customer_db:
+  host: "0.0.0.0"
+  port: 6001
+  data_path: "data/customer_db.json"
+
+product_db:
+  host: "0.0.0.0"
+  port: 6002
+  data_path: "data/product_db.json"
+
+buyer_frontend:
+  host: "0.0.0.0"
+  port: 5001
+  customer_db: { host: "CUSTOMER_DB_VM_IP", port: 6001 }
+  product_db:  { host: "PRODUCT_DB_VM_IP", port: 6002 }
+
+seller_frontend:
+  host: "0.0.0.0"
+  port: 5002
+  customer_db: { host: "CUSTOMER_DB_VM_IP", port: 6001 }
+  product_db:  { host: "PRODUCT_DB_VM_IP", port: 6002 }
