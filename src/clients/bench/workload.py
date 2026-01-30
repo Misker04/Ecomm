@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import random
 from typing import List, Dict, Any, Tuple
+import time
 
 from ...common.protocol import RpcClient
 
@@ -20,6 +21,8 @@ def setup_sellers(seller_client: RpcClient, n: int, items_per_seller: int, categ
     """
     sellers = []
     for i in range(n):
+        if i % 20 == 0 and i > 0:
+            time.sleep(0.05)
         seller_name = f"Seller{i}"
         username = _seller_username(i)
         password = "pw"
@@ -50,6 +53,8 @@ def setup_sellers(seller_client: RpcClient, n: int, items_per_seller: int, categ
 def setup_buyers(buyer_client: RpcClient, n: int) -> List[Dict[str, Any]]:
     buyers = []
     for i in range(n):
+        if i % 20 == 0 and i > 0:
+            time.sleep(0.05)
         buyer_name = f"Buyer{i}"
         username = _buyer_username(i)
         password = "pw"

@@ -74,11 +74,26 @@ class RpcClient:
             "session_id": session_id,
             "payload": payload,
         }
-        with socket.create_connection((self.host, self.port), timeout=self.timeout_s) as sock:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
             sock.settimeout(self.timeout_s)
+
+            # reduce Windows port pain
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
+            # IMPORTANT: avoid TIME_WAIT explosion on Windows for short-lived connections
+            # (abortive close)
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER, struct.pack("ii", 1, 0))
+
+            sock.connect((self.host, self.port))
             send_json(sock, req)
             resp = recv_json(sock)
             return resp
+        finally:
+            try:
+                sock.close()
+            except Exception:
+                pass
 
 @dataclass
 class PersistentRpcClient:
