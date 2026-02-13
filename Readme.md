@@ -33,14 +33,14 @@ Each service runs as a separate process.
 
 ### Start Backend Services
 ```bash
-python -m src.customer_db.server
-python -m src.product_db.server
+python -m src.customer_db.server --config config/local.yaml
+python -m src.product_db.server --config config/local.yaml
 ```
 
 ### Start Frontend Servers
 ```bash
-python -m src.frontend.buyer.server
-python -m src.frontend.seller.server
+python -m src.frontend.buyer.server --config config/local.yaml
+python -m src.frontend.seller.server --config config/local.yaml
 ```
 
 ### Start Clients
